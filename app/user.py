@@ -6,11 +6,13 @@ from app.generators import ai_generate
 
 import app.keyboards as kb
 from app.states import Chat
+from app.database.requests import set_user
 
 user = Router()
 
 @user.message(CommandStart())
 async def cmd_start(message: Message):
+    await set_user(message.from_user.id)
     await message.answer('Привет, Печенька! Это AI-BOT\nНажми "Чат", задай свой вопрос :)', reply_markup=kb.main)
 
 @user.message(F.text == 'Чат')
