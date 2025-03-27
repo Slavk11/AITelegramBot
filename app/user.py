@@ -20,9 +20,12 @@ async def chatting(message: Message, state: FSMContext):
 
 @user.message(Chat.text)
 async def chat_response(message: Message, state: FSMContext):
+    await state.set_state(Chat.wait)
     response = await ai_generate(message.text)
     await message.answer(response)
     await state.clear()
 
-
+@user.message(Chat.wait)
+async def wait_wait(message: Message):
+    await message.answer('Ваше сообщение генерируется, подождите')
 
