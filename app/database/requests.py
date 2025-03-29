@@ -24,3 +24,11 @@ async def get_user(session, tg_id):
 @connection
 async def get_users(session):
     return await session.scalars(select(User))
+
+@connection
+async def delete_user(session, tg_id):
+    await session.execute(
+        delete(User).where(User.tg_id == tg_id)
+    )
+    await session.commit()
+
