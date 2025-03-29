@@ -1,7 +1,6 @@
 # 🤖 AI Telegram Chat Bot
 
-![Снимок экрана 2025-03-29 в 23 36 20](https://github.com/user-attachments/assets/8ee12f1a-a086-4067-a1f5-2e2fd5bb252f)
-
+![IMG_0713](https://github.com/user-attachments/assets/accaa7c2-cfde-412c-96e4-e0a922595349)
 
 Телеграм-бот с интеграцией ChatGPT, позволяющий вести диалог прямо в Telegram.
 
