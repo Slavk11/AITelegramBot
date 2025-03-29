@@ -13,19 +13,22 @@ user = Router()
 @user.message(CommandStart())
 async def cmd_start(message: Message):
     await set_user(message.from_user.id)
-    await message.answer('Привет, Печенька! Это AI-BOT\nНажми "Чат", задай свой вопрос :)', reply_markup=kb.main)
+    await message.answer('Привет! Это AI-BOT\nНажми "Чат", задай свой вопрос :)', reply_markup=kb.main)
 
 @user.message(F.text == 'Чат')
 async def chatting(message: Message, state: FSMContext):
     await state.set_state(Chat.text)
-    await message.answer('Сейчас можешь написать свой промт!')
+    await message.answer('Пожалуйста напиши свой вопрос!')
 
 @user.message(Chat.text)
 async def chat_response(message: Message, state: FSMContext):
+    await message.answer('Подожди немного, сейчас я генерирую ответ')
     await state.set_state(Chat.wait)
+
     response = await ai_generate(message.text)
     await message.answer(response)
-    await state.clear()
+
+    await state.set_state(Chat.text)
 
 @user.message(Chat.wait)
 async def wait_wait(message: Message):
