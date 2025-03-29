@@ -3,7 +3,10 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 from app.generators import ai_generate
+from aiogram.enums import ChatAction
 
+
+import asyncio
 import app.keyboards as kb
 from app.states import Chat
 from app.database.requests import set_user
@@ -22,7 +25,14 @@ async def chatting(message: Message, state: FSMContext):
 
 @user.message(Chat.text)
 async def chat_response(message: Message, state: FSMContext):
+    await state.set_state(Chat.wait)
+    await message.chat.do(ChatAction.TYPING)
+    await asyncio.sleep(1)
+
     await message.answer('Подожди немного, сейчас я генерирую ответ')
+
+    await message.chat.do(ChatAction.TYPING)
+    await asyncio.sleep(1)
     await state.set_state(Chat.wait)
 
     response = await ai_generate(message.text)
