@@ -2,20 +2,14 @@ from openai import AsyncOpenAI
 from config import AITOKEN
 
 client = AsyncOpenAI(
-    base_url="https://openrouter.ai/api/v1",
     api_key=AITOKEN,
+    base_url="https://openrouter.ai/api/v1"
 )
 
 async def ai_generate(text: str) -> str:
-    completion = await client.chat.completions.create(
-        model='deepseek/deepseek-chat',
-        messages=[
-            {
-                "role": "user",
-                "content": text
-            }
-        ]
+    resp = await client.chat.completions.create(
+        model="deepseek/deepseek-r1-0528-qwen3-8b:free",
+        messages=[{"role": "user", "content": text}],
+        temperature=0.8
     )
-
-    print(completion)
-    return completion.choices[0].message.content
+    return resp.choices[0].message.content

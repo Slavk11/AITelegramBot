@@ -36,7 +36,7 @@ async def chat_response(message: Message, state: FSMContext):
     await message.chat.do(ChatAction.TYPING)
     await asyncio.sleep(1)
 
-    await message.answer('Подожди немного, сейчас я генерирую ответ')
+    # await message.answer('Подожди немного, сейчас я генерирую ответ')
 
     await message.chat.do(ChatAction.TYPING)
     await asyncio.sleep(1)
@@ -47,9 +47,9 @@ async def chat_response(message: Message, state: FSMContext):
 
     await state.set_state(Chat.text)
 
-@user.message(Chat.wait)
-async def wait_wait(message: Message):
-    await message.answer('Ваше сообщение генерируется, подождите')
+# @user.message(Chat.wait)
+# async def wait_wait(message: Message):
+#     await message.answer('Ваше сообщение генерируется, подождите')
 
 @user.message(F.text == "/privacy")
 async def privacy_policy(message: Message):
